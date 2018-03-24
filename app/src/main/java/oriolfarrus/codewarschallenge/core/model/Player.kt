@@ -10,7 +10,19 @@ import android.arch.persistence.room.PrimaryKey
 class Player {
 
     @PrimaryKey
-    lateinit var username : String
+    lateinit var username: String
 
-    var insertTime : Long = 0L
+    var insertTime: Long = 0L
+
+    var leaderboardPosition: Int = 0
+
+    //TODO languages!!
+
+    override fun equals(other: Any?): Boolean {
+        val otherPlayer = other as? Player
+        otherPlayer?.let {
+            return it.username == username
+        }
+        return false
+    }
 }

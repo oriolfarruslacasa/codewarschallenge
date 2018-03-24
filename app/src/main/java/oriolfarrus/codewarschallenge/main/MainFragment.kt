@@ -15,13 +15,15 @@ import javax.inject.Inject
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class MainFragment : Fragment(), MainContract.MainView {
+class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
     @Inject lateinit var presenter: MainPresenterImpl
+
+    @Inject lateinit var adapter: MainFragmentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +39,15 @@ class MainFragment : Fragment(), MainContract.MainView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setButtonBehaviour()
+        initRecyclerView()
     }
 
     override fun renderPlayer(player: Player) {
-        Toast.makeText(context, player.username, Toast.LENGTH_SHORT).show()
+        adapter.addPlayer(player)
+    }
+
+    override fun renderPlayerList(list: List<Player>) {
+        adapter.addList(list)
     }
 
     override fun renderPlayerError() {
@@ -51,6 +58,16 @@ class MainFragment : Fragment(), MainContract.MainView {
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.detach()
+    }
+
+    override fun onPlayerClick(player: Player) {
+        //TODO open player detail
+        Toast.makeText(context, "Open detail: " + player.username, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initRecyclerView() {
+        recyclerView.adapter = adapter
+        adapter.listener = this
     }
 
     private fun setButtonBehaviour() {

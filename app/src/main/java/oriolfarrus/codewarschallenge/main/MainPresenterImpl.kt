@@ -57,9 +57,7 @@ class MainPresenterImpl @Inject constructor(private val codewarsRepository: Code
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
             .subscribe({
-                           it.forEach {
-                               Log.d("stuff", "Player: " + it.username + " " + it.insertTime)
-                           }
+                           view?.renderPlayerList(it)
                        }, { e ->
                            Log.e("stuff", "database" + e.localizedMessage)
                        })

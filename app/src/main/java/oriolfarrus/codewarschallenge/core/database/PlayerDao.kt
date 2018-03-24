@@ -13,8 +13,7 @@ import oriolfarrus.codewarschallenge.core.model.Player
 @Dao
 interface PlayerDao {
 
-    //TODO get last ones!
-    @Query("SELECT * FROM player LIMIT 5")
+    @Query("SELECT * FROM player ORDER BY insertTime DESC LIMIT 5")
     fun getAll(): Single<List<Player>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

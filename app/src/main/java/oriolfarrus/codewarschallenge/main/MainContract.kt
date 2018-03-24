@@ -9,6 +9,7 @@ interface MainContract {
 
     interface MainView {
         fun renderPlayer(player : Player)
+        fun renderPlayerList(list : List<Player>)
         fun renderPlayerError()
     }
 
