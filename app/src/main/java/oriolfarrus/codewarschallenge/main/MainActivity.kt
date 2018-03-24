@@ -1,7 +1,8 @@
-package oriolfarrus.codewarschallenge
+package oriolfarrus.codewarschallenge.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import oriolfarrus.codewarschallenge.R
 
 class MainActivity : AppCompatActivity() {
 
