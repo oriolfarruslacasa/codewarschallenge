@@ -2,13 +2,15 @@ package oriolfarrus.codewarschallenge.playerdetail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_player_detail.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.core.model.Player
+import oriolfarrus.codewarschallenge.playerdetail.authored_challenges.AuthoredChallengeFragment
+import oriolfarrus.codewarschallenge.playerdetail.completed_challenges.CompletedChallengeFragment
 import javax.inject.Inject
 
 /**
@@ -60,7 +62,22 @@ class PlayerDetailFragment : Fragment(), PlayerDetailContract.PlayerDetailView {
     }
 
     private fun setupBottomNavigation() {
-        //TODO setup bottom navigation
+
+        replaceFragment(CompletedChallengeFragment.newInstance(getPlayerUserName()))
+
+        navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_completed -> replaceFragment(CompletedChallengeFragment.newInstance(getPlayerUserName()))
+                R.id.action_authored -> replaceFragment(AuthoredChallengeFragment.newInstance(getPlayerUserName()))
+            }
+            true
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        fragmentManager?.beginTransaction()
+            ?.replace(R.id.contentLayout, fragment)
+            ?.commit()
     }
 
     private fun setupToolbar() {
@@ -70,4 +87,6 @@ class PlayerDetailFragment : Fragment(), PlayerDetailContract.PlayerDetailView {
     }
 
     private fun getPlayerName() = arguments?.getString(KEY_NAME)
+
+    private fun getPlayerUserName() = arguments?.getString(KEY_USERNAME) ?: ""
 }
