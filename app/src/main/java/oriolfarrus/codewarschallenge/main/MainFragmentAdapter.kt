@@ -14,6 +14,11 @@ import javax.inject.Inject
  */
 class MainFragmentAdapter @Inject constructor() : RecyclerView.Adapter<MainFragmentAdapter.ViewHolder>() {
 
+    companion object {
+        const val SORT_DATE = 0
+        const val SORT_RANK = 1
+    }
+
     var listener: PlayerClickListener? = null
 
     var list: MutableList<Player> = mutableListOf()
@@ -37,11 +42,21 @@ class MainFragmentAdapter @Inject constructor() : RecyclerView.Adapter<MainFragm
         notifyDataSetChanged()
     }
 
+    fun setSort(sort: Int) {
+        when (sort) {
+            SORT_DATE -> list.sortByDescending { it.insertTime }
+            SORT_RANK -> list.sortBy { it.leaderboardPosition }
+        }
+
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val playerToShow = list.getOrNull(position)
 
         playerToShow?.let { player ->
             holder.itemView.playerName.text = player.username
+            holder.itemView.playerRank.text = holder.itemView.context.getString(R.string.main_fragment_rank_text, player.leaderboardPosition)
 
             holder.itemView?.setOnClickListener {
                 listener?.onPlayerClick(player)

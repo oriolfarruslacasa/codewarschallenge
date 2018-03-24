@@ -3,4 +3,12 @@
     <string name="main_fragment_send">Send</string>
     <string name="main_fragment_hint">User name</string>
     <string name="user_not_found">User not found</string>
+    <string name="main_fragment_rank">Rank:</string>
+    <string name="main_fragment_rank_text">#%d</string>
+
+    <string-array name="sorting_array">
+        <item>Date</item>
+        <item>Rank</item>
+    </string-array>
+
 </resources>

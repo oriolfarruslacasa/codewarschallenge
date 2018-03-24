@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
@@ -43,6 +45,7 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
         super.onViewCreated(view, savedInstanceState)
         setSearchBehaviours()
         initRecyclerView()
+        initSortingSpinner()
     }
 
     override fun renderPlayer(player: Player) {
@@ -74,6 +77,25 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
         nameField.text.clear()
 
         hideKeyboard()
+    }
+
+    private fun initSortingSpinner() {
+        val spinnerAdapter = ArrayAdapter.createFromResource(activity, R.array.sorting_array, android.R.layout.simple_spinner_item)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sortingSpinner.adapter = spinnerAdapter
+
+        sortingSpinner.onItemSelectedListener =  object: AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                when(position){
+                    0 -> adapter.setSort(MainFragmentAdapter.SORT_DATE)
+                    1 -> adapter.setSort(MainFragmentAdapter.SORT_RANK)
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {
