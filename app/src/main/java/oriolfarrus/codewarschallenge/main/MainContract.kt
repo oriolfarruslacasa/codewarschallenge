@@ -8,12 +8,13 @@ import oriolfarrus.codewarschallenge.core.model.Player
 interface MainContract {
 
     interface MainView {
-        fun renderList(user : List<Player>)
-        fun renderError()
+        fun renderPlayer(player : Player)
+        fun renderPlayerError()
     }
 
     interface MainPresenter {
         fun attachView(view: MainView)
+        fun search(name : String)
         fun detach()
     }
 }

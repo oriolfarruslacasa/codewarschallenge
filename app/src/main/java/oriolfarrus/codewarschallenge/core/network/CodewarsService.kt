@@ -10,6 +10,6 @@ import retrofit2.http.Path
  */
 interface CodewarsService {
 
-    @GET("/users/{name}")
-    fun listUsers(@Path("name") name: String?): Single<Player>
+    @GET("users/{name}")
+    fun getUser(@Path("name") name: String): Single<Player>
 }

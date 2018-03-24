@@ -10,5 +10,7 @@ import android.arch.persistence.room.PrimaryKey
 class Player {
 
     @PrimaryKey
-    val username : String? = null
+    lateinit var username : String
+
+    var insertTime : Long = 0L
 }

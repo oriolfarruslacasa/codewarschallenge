@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Codewars Challenge</string>
+    <string name="main_fragment_send">Send</string>
+    <string name="main_fragment_hint">User name</string>
 </resources>
