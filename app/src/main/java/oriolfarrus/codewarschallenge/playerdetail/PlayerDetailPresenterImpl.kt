@@ -1,15 +1,18 @@
 package oriolfarrus.codewarschallenge.playerdetail
 
+import javax.inject.Inject
+
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class PlayerDetailPresenterImpl : PlayerDetailContract.PlayerDetailPresenter {
+class PlayerDetailPresenterImpl @Inject constructor() : PlayerDetailContract.PlayerDetailPresenter {
+
+    private var view: PlayerDetailContract.PlayerDetailView? = null
 
     override fun attachView(view: PlayerDetailContract.PlayerDetailView) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.view = view
     }
 
     override fun detach() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

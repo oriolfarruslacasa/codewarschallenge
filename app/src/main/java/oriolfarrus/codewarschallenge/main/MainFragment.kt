@@ -1,6 +1,7 @@
 package oriolfarrus.codewarschallenge.main
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.core.model.Player
+import oriolfarrus.codewarschallenge.playerdetail.PlayerDetailActivity
 import javax.inject.Inject
 
 /**
@@ -69,8 +71,7 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
     }
 
     override fun onPlayerClick(player: Player) {
-        //TODO open player detail
-        Toast.makeText(context, "Open detail: " + player.username, Toast.LENGTH_SHORT).show()
+        context?.startActivity(PlayerDetailActivity.getCallingIntent(context as Context, player))
     }
 
     private fun resetSearchState() {
@@ -84,13 +85,12 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sortingSpinner.adapter = spinnerAdapter
 
-        sortingSpinner.onItemSelectedListener =  object: AdapterView.OnItemSelectedListener{
+        sortingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                when(position){
+                when (position) {
                     0 -> adapter.setSort(MainFragmentAdapter.SORT_DATE)
                     1 -> adapter.setSort(MainFragmentAdapter.SORT_RANK)
                 }

@@ -21,7 +21,7 @@ class MainFragmentAdapter @Inject constructor() : RecyclerView.Adapter<MainFragm
 
     var listener: PlayerClickListener? = null
 
-    var list: MutableList<Player> = mutableListOf()
+    private var list: MutableList<Player> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_player, parent, false))
@@ -55,7 +55,8 @@ class MainFragmentAdapter @Inject constructor() : RecyclerView.Adapter<MainFragm
         val playerToShow = list.getOrNull(position)
 
         playerToShow?.let { player ->
-            holder.itemView.playerName.text = player.username
+            holder.itemView.playerName.text = player.name
+            holder.itemView.playerUserName.text = player.username
             holder.itemView.playerRank.text = holder.itemView.context.getString(R.string.main_fragment_rank_text, player.leaderboardPosition)
 
             holder.itemView?.setOnClickListener {

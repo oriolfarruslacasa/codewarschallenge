@@ -6,8 +6,7 @@ package oriolfarrus.codewarschallenge.playerdetail
 interface PlayerDetailContract {
 
     interface PlayerDetailView {
-        fun renderPlayer()
-        fun renderError()
+
     }
 
     interface PlayerDetailPresenter {

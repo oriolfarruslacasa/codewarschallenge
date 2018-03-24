@@ -16,6 +16,8 @@ class Player {
 
     var leaderboardPosition: Int = 0
 
+    lateinit var name: String
+
     //TODO languages!!
 
     override fun equals(other: Any?): Boolean {
