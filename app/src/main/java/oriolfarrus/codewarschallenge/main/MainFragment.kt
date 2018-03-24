@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
-import oriolfarrus.codewarschallenge.core.di.DaggerAppComponent
 import oriolfarrus.codewarschallenge.core.model.Player
 import javax.inject.Inject
 
@@ -15,11 +15,11 @@ import javax.inject.Inject
  */
 class MainFragment : Fragment(), MainContract.MainView {
 
-    @Inject lateinit var presenter : MainPresenterImpl
+    @Inject lateinit var presenter: MainPresenterImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerAppComponent.create().inject(this)
+        CodewarsApplication.instance.daggerAppComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
