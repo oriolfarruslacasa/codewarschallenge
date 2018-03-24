@@ -5,6 +5,8 @@
     <string name="user_not_found">User not found</string>
     <string name="main_fragment_rank">Rank:</string>
     <string name="main_fragment_rank_text">#%d</string>
+    <string name="menu_completed_challenges">Completed challenges</string>
+    <string name="menu_authored_challenges">Authored challenges</string>
 
     <string-array name="sorting_array">
         <item>Date</item>

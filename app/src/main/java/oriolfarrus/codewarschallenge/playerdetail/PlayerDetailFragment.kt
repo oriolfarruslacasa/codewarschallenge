@@ -64,7 +64,6 @@ class PlayerDetailFragment : Fragment(), PlayerDetailContract.PlayerDetailView {
     }
 
     private fun setupToolbar() {
-        Log.d("stuff", "title: " + getPlayerName())
         activity?.let {
             it.title = getPlayerName()
         }
