@@ -9,8 +9,9 @@ import kotlinx.android.synthetic.main.fragment_player_detail.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.core.model.Player
-import oriolfarrus.codewarschallenge.playerdetail.authored_challenges.AuthoredChallengeFragment
-import oriolfarrus.codewarschallenge.playerdetail.completed_challenges.CompletedChallengeFragment
+import oriolfarrus.codewarschallenge.playerdetail.authoredchallenges.AuthoredChallengeFragment
+import oriolfarrus.codewarschallenge.playerdetail.completedchallenges.CompletedChallengeFragment
+
 import javax.inject.Inject
 
 /**
