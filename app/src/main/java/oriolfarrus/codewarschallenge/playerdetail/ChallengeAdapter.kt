@@ -1,4 +1,4 @@
-package oriolfarrus.codewarschallenge.playerdetail.completedchallenges
+package oriolfarrus.codewarschallenge.playerdetail
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_challenge.view.*
 import oriolfarrus.codewarschallenge.R
-import oriolfarrus.codewarschallenge.core.model.ChallengeCompleted
-import oriolfarrus.codewarschallenge.playerdetail.ChallengeClickListener
+import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import javax.inject.Inject
 
 /**
  * Created by oriolfarrus on 25/03/2018.
  */
-class CompletedChallengeAdapter @Inject constructor() : RecyclerView.Adapter<CompletedChallengeAdapter.ViewHolder>() {
+class ChallengeAdapter @Inject constructor() : RecyclerView.Adapter<ChallengeAdapter.ViewHolder>() {
 
     companion object {
         const val TYPE_LOADING = 0
         const val TYPE_ITEM = 1
     }
 
-    val data: MutableList<ChallengeCompleted> = mutableListOf()
+    val data: MutableList<ChallengeBase> = mutableListOf()
 
     var listener: ChallengeClickListener? = null
 
@@ -51,7 +50,7 @@ class CompletedChallengeAdapter @Inject constructor() : RecyclerView.Adapter<Com
         }
     }
 
-    fun addData(data: List<ChallengeCompleted>): Int {
+    fun addData(data: List<ChallengeBase>): Int {
         this.data.addAll(data)
         isLoading = false
         return this.data.size

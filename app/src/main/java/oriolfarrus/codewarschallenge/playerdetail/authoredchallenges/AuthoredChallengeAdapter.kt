@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_challenge.view.*
 import oriolfarrus.codewarschallenge.R
-import oriolfarrus.codewarschallenge.core.model.ChallengeAuthored
+import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.playerdetail.ChallengeClickListener
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class AuthoredChallengeAdapter @Inject constructor() : RecyclerView.Adapter<Auth
         const val TYPE_ITEM = 1
     }
 
-    var data: List<ChallengeAuthored>? = null
+    var data: List<ChallengeBase>? = null
         set(value) {
             field = value
             isLoading = false

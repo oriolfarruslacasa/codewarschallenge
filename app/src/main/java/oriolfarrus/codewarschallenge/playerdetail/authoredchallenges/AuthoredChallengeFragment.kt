@@ -1,20 +1,22 @@
 package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_challenge.*
+import kotlinx.android.synthetic.main.fragment_challenges_list.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
+import oriolfarrus.codewarschallenge.challengedetail.ChallengeDetailActivity
 import oriolfarrus.codewarschallenge.core.gone
-import oriolfarrus.codewarschallenge.core.model.ChallengeAuthored
 import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
+import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.core.visible
 import oriolfarrus.codewarschallenge.playerdetail.ChallengeClickListener
+import oriolfarrus.codewarschallenge.playerdetail.ChallengeAdapter
 import javax.inject.Inject
 
 /**
@@ -37,7 +39,7 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
 
     @Inject lateinit var presenter: AuthoredChallengePresenterImpl
 
-    @Inject lateinit var adapter: AuthoredChallengeAdapter
+    @Inject lateinit var adapter: ChallengeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,7 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val inflate = inflater.inflate(R.layout.fragment_challenge, container, false)
+        val inflate = inflater.inflate(R.layout.fragment_challenges_list, container, false)
         presenter.attachView(this)
         return inflate
     }
@@ -55,8 +57,13 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
         initRecyclerView()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.detach()
+    }
+
     override fun renderChallenges(dataWrapper: ChallengeAuthoredWrapper) {
-        adapter.data = dataWrapper.data
+        adapter.addData(dataWrapper.data)
     }
 
     override fun renderError() {
@@ -74,8 +81,8 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
         }
     }
 
-    override fun onChallengeClicked(challengeAuthored: ChallengeAuthored) {
-        Toast.makeText(context, "Challenge clicked: " + challengeAuthored.name, Toast.LENGTH_SHORT).show()
+    override fun onChallengeClicked(challenge: ChallengeBase) {
+        context?.startActivity(ChallengeDetailActivity.getCallingIntent(context as Context, challenge))
     }
 
     override fun getPlayerName() = arguments?.getString(KEY_USERNAME) ?: ""

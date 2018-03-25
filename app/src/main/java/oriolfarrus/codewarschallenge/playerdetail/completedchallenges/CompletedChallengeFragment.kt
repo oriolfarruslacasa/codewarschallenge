@@ -1,19 +1,21 @@
 package oriolfarrus.codewarschallenge.playerdetail.completedchallenges
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_challenge.*
+import kotlinx.android.synthetic.main.fragment_challenges_list.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
+import oriolfarrus.codewarschallenge.challengedetail.ChallengeDetailActivity
 import oriolfarrus.codewarschallenge.core.gone
-import oriolfarrus.codewarschallenge.core.model.ChallengeCompleted
+import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.core.model.ChallengeCompletedWrapper
 import oriolfarrus.codewarschallenge.core.visible
+import oriolfarrus.codewarschallenge.playerdetail.ChallengeAdapter
 import oriolfarrus.codewarschallenge.playerdetail.ChallengeClickListener
 import oriolfarrus.codewarschallenge.playerdetail.authoredchallenges.CompletedChallengePresenterImpl
 import javax.inject.Inject
@@ -39,7 +41,7 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
 
     @Inject lateinit var presenter: CompletedChallengePresenterImpl
 
-    @Inject lateinit var adapter: CompletedChallengeAdapter
+    @Inject lateinit var adapter: ChallengeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,7 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val inflate = inflater.inflate(R.layout.fragment_challenge, container, false)
+        val inflate = inflater.inflate(R.layout.fragment_challenges_list, container, false)
         presenter.attachView(this)
         return inflate
     }
@@ -55,6 +57,11 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.detach()
     }
 
     override fun renderChallenges(dataWrapper: ChallengeCompletedWrapper) {
@@ -80,8 +87,8 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
         adapter.isLoading = true
     }
 
-    override fun onChallengeClicked(challengeCompleted: ChallengeCompleted) {
-        Toast.makeText(context, "Challenge clicked: " + challengeCompleted.name, Toast.LENGTH_SHORT).show()
+    override fun onChallengeClicked(challenge: ChallengeBase) {
+        context?.startActivity(ChallengeDetailActivity.getCallingIntent(context as Context, challenge))
     }
 
     private fun initRecyclerView() {
