@@ -60,7 +60,7 @@ class CompletedChallengePresenterImpl @Inject constructor(private val codewarsRe
     }
 
     private fun loadCompletedChallengesSuccess(data: ChallengeCompletedWrapper) {
-        if (data.data.isNotEmpty()) {
+        if (data.data?.isNotEmpty() == true) {
             page++
             view?.renderChallenges(data)
         } else if (page == 0) {
@@ -71,7 +71,7 @@ class CompletedChallengePresenterImpl @Inject constructor(private val codewarsRe
     //I assume that if there's an error no more pages can be loaded, no loadFinished() is going to be called in the Fragment
     private fun loadCompletedChallengesError(throwable: Throwable) {
         if (throwable.localizedMessage == TIMEOUT_ERROR) {
-            view?.renderTimeout()
+            view?.renderTimeout(page == 0)
         } else {
             Log.e("completedChallenge", throwable.localizedMessage + " " + throwable.message)
             if (page == 0) {

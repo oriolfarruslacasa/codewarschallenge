@@ -13,7 +13,7 @@ interface CompletedChallengeContract {
         fun getPlayerName(): String
         fun renderChallenges(dataWrapper: ChallengeCompletedWrapper)
         fun renderError()
-        fun renderTimeout()
+        fun renderTimeout(shouldHideList: Boolean)
     }
 
     interface CompletedChallengePresenter : BasePresenter {

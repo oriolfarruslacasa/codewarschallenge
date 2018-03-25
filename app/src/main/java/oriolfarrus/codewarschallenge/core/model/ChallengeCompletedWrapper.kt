@@ -7,5 +7,5 @@ class ChallengeCompletedWrapper {
 
     var totalPages: Int = 0
     var totalItems: Int = 0
-    lateinit var data: List<ChallengeBase>
+    var data: List<ChallengeBase>? = null
 }

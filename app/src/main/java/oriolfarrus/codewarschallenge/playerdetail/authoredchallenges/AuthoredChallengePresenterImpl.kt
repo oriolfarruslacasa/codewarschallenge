@@ -61,7 +61,7 @@ class AuthoredChallengePresenterImpl @Inject constructor(private val codewarsRep
     }
 
     private fun loadCompletedChallengesSuccess(data: ChallengeAuthoredWrapper) {
-        if (data.data.isNotEmpty()) {
+        if (data.data?.isNotEmpty() == true) {
             view?.renderChallenges(data)
         } else {
             view?.renderError()

@@ -60,13 +60,15 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
     }
 
     override fun renderChallenges(dataWrapper: ChallengeCompletedWrapper) {
-        val totalItems = adapter.addData(dataWrapper.data)
-        endlessRecyclerview?.finishedLoading()
+        dataWrapper.data?.let {
+            val totalItems = adapter.addData(it)
+            endlessRecyclerview?.finishedLoading()
 
-        if (totalItems == dataWrapper.totalItems) {
-            endlessRecyclerview?.endlessRecyclerViewListener = null
-            Snackbar.make(endlessRecyclerview,
-                          R.string.all_challenges_loaded, Snackbar.LENGTH_SHORT).show()
+            if (totalItems == dataWrapper.totalItems) {
+                endlessRecyclerview?.endlessRecyclerViewListener = null
+                Snackbar.make(endlessRecyclerview,
+                              R.string.all_challenges_loaded, Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -86,8 +88,10 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
         context?.startActivity(ChallengeDetailActivity.getCallingIntent(context as Context, challenge))
     }
 
-    override fun renderTimeout() {
-        renderError()
+    override fun renderTimeout(shouldHideList: Boolean) {
+        if (shouldHideList) {
+            renderError()
+        }
 
         Snackbar.make(endlessRecyclerview,
                       R.string.server_timeout, Snackbar.LENGTH_INDEFINITE).apply {

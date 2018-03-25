@@ -5,5 +5,5 @@ package oriolfarrus.codewarschallenge.core.model
  */
 class ChallengeAuthoredWrapper {
 
-    lateinit var data: List<ChallengeBase>
+    var data: List<ChallengeBase>? = null
 }

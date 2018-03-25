@@ -1,6 +1,5 @@
 package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 
-import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -60,7 +59,9 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
     }
 
     override fun renderChallenges(dataWrapper: ChallengeAuthoredWrapper) {
-        adapter.addData(dataWrapper.data)
+        dataWrapper.data?.let {
+            adapter.addData(it)
+        }
     }
 
     override fun renderError() {
