@@ -15,7 +15,9 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
+import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.Player
+import oriolfarrus.codewarschallenge.core.visible
 import oriolfarrus.codewarschallenge.playerdetail.PlayerDetailActivity
 import javax.inject.Inject
 
@@ -120,7 +122,7 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
     }
 
     private fun searchNameAction() {
-        progressBar.visibility = View.VISIBLE
+        progressBar.visible()
         val name = nameField.text.toString()
 
         if (name.isNotEmpty()) {
@@ -136,6 +138,6 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
     }
 
     private fun hideProgressBar() {
-        progressBar.visibility = View.GONE
+        progressBar.gone()
     }
 }
