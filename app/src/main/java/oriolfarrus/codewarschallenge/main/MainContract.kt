@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.main
 
+import oriolfarrus.codewarschallenge.core.basecontract.BasePresenter
+import oriolfarrus.codewarschallenge.core.basecontract.BaseView
 import oriolfarrus.codewarschallenge.core.model.Player
 
 /**
@@ -7,15 +9,14 @@ import oriolfarrus.codewarschallenge.core.model.Player
  */
 interface MainContract {
 
-    interface MainView {
-        fun renderPlayer(player : Player)
-        fun renderPlayerList(list : List<Player>)
+    interface MainView : BaseView {
+        fun renderPlayer(player: Player)
+        fun renderPlayerList(list: List<Player>)
         fun renderPlayerError()
     }
 
-    interface MainPresenter {
+    interface MainPresenter : BasePresenter {
         fun attachView(view: MainView)
-        fun search(name : String)
-        fun detach()
+        fun search(name: String)
     }
 }

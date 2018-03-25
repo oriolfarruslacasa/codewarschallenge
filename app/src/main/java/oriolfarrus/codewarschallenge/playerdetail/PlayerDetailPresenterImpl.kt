@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.playerdetail
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.OnLifecycleEvent
 import javax.inject.Inject
 
 /**
@@ -11,8 +13,10 @@ class PlayerDetailPresenterImpl @Inject constructor() : PlayerDetailContract.Pla
 
     override fun attachView(view: PlayerDetailContract.PlayerDetailView) {
         this.view = view
+        view.getViewLifeCycle().addObserver(this)
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun detach() {
     }
 }

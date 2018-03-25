@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.main
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.OnLifecycleEvent
 import android.util.Log
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -22,6 +24,7 @@ class MainPresenterImpl @Inject constructor(private val codewarsRepository: Code
 
     override fun attachView(view: MainContract.MainView) {
         this.view = view
+        view.getViewLifeCycle().addObserver(this)
         loadLastSearchedUsers()
     }
 
@@ -29,6 +32,7 @@ class MainPresenterImpl @Inject constructor(private val codewarsRepository: Code
         searchForUser(name)
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun detach() {
         compositeDisposable.dispose()
     }

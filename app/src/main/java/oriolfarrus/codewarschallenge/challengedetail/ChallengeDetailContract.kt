@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.challengedetail
 
+import oriolfarrus.codewarschallenge.core.basecontract.BasePresenter
+import oriolfarrus.codewarschallenge.core.basecontract.BaseView
 import oriolfarrus.codewarschallenge.core.model.ChallengeDetail
 
 /**
@@ -7,14 +9,13 @@ import oriolfarrus.codewarschallenge.core.model.ChallengeDetail
  */
 interface ChallengeDetailContract {
 
-    interface ChallengeDetailView {
+    interface ChallengeDetailView : BaseView {
         fun renderChallenge(challengeDetail: ChallengeDetail)
         fun getChallengeId(): String
         fun renderError()
     }
 
-    interface ChallengeDetailPresenter {
+    interface ChallengeDetailPresenter : BasePresenter {
         fun attachView(view: ChallengeDetailView)
-        fun detach()
     }
 }

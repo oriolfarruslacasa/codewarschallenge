@@ -1,5 +1,6 @@
 package oriolfarrus.codewarschallenge.challengedetail
 
+import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -56,11 +57,6 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
         setupToolbar()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.detach()
-    }
-
     override fun renderChallenge(challengeDetail: ChallengeDetail) {
         context?.let {
             showContent()
@@ -74,6 +70,8 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
     }
 
     override fun getChallengeId() = arguments?.getString(KEY_ID) ?: ""
+
+    override fun getViewLifeCycle() = lifecycle
 
     private fun showError() {
         progressBar.gone()

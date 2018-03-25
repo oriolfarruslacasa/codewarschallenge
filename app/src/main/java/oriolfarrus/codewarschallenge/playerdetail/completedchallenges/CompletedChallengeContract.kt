@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.playerdetail.completedchallenges
 
+import oriolfarrus.codewarschallenge.core.basecontract.BasePresenter
+import oriolfarrus.codewarschallenge.core.basecontract.BaseView
 import oriolfarrus.codewarschallenge.core.model.ChallengeCompletedWrapper
 
 /**
@@ -7,16 +9,15 @@ import oriolfarrus.codewarschallenge.core.model.ChallengeCompletedWrapper
  */
 interface CompletedChallengeContract {
 
-    interface CompletedChallengeView{
-        fun getPlayerName() : String
+    interface CompletedChallengeView : BaseView {
+        fun getPlayerName(): String
         fun renderChallenges(dataWrapper: ChallengeCompletedWrapper)
         fun renderError()
         fun renderTimeout()
     }
 
-    interface CompletedChallengePresenter{
+    interface CompletedChallengePresenter : BasePresenter {
         fun attachView(view: CompletedChallengeView)
-        fun detach()
         fun loadNextPage()
         fun retry()
     }

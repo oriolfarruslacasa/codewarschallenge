@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.OnLifecycleEvent
 import android.util.Log
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -27,9 +29,11 @@ class CompletedChallengePresenterImpl @Inject constructor(private val codewarsRe
 
     override fun attachView(view: CompletedChallengeContract.CompletedChallengeView) {
         this.view = view
+        view.getViewLifeCycle().addObserver(this)
         loadCompletedChallenges(view.getPlayerName())
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun detach() {
         compositeDisposable.dispose()
     }

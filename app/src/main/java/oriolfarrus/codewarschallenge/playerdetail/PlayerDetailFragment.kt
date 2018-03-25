@@ -11,7 +11,6 @@ import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.core.model.Player
 import oriolfarrus.codewarschallenge.playerdetail.authoredchallenges.AuthoredChallengeFragment
 import oriolfarrus.codewarschallenge.playerdetail.completedchallenges.CompletedChallengeFragment
-
 import javax.inject.Inject
 
 /**
@@ -57,10 +56,7 @@ class PlayerDetailFragment : Fragment(), PlayerDetailContract.PlayerDetailView {
         setupBottomNavigation()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.detach()
-    }
+    override fun getViewLifeCycle() = lifecycle
 
     private fun setupBottomNavigation() {
 

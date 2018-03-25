@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 
+import oriolfarrus.codewarschallenge.core.basecontract.BasePresenter
+import oriolfarrus.codewarschallenge.core.basecontract.BaseView
 import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
 
 /**
@@ -7,16 +9,15 @@ import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
  */
 interface AuthoredChallengeContract {
 
-    interface AuthoredChallengeView{
-        fun getPlayerName() : String
+    interface AuthoredChallengeView : BaseView {
+        fun getPlayerName(): String
         fun renderChallenges(dataWrapper: ChallengeAuthoredWrapper)
         fun renderError()
         fun renderTimeout()
     }
 
-    interface AuthoredChallengePresenter{
+    interface AuthoredChallengePresenter : BasePresenter {
         fun attachView(view: AuthoredChallengeView)
-        fun detach()
         fun retry()
     }
 }

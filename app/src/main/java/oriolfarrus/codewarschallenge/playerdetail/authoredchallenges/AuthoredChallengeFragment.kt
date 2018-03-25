@@ -1,5 +1,6 @@
 package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 
+import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -58,11 +59,6 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
         initRecyclerView()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.detach()
-    }
-
     override fun renderChallenges(dataWrapper: ChallengeAuthoredWrapper) {
         adapter.addData(dataWrapper.data)
     }
@@ -87,6 +83,8 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
     }
 
     override fun getPlayerName() = arguments?.getString(KEY_USERNAME) ?: ""
+
+    override fun getViewLifeCycle() = lifecycle
 
     private fun retryAction(view: View) {
         showRecyclerView()

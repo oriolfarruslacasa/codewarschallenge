@@ -1,5 +1,7 @@
 package oriolfarrus.codewarschallenge.challengedetail
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.OnLifecycleEvent
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import oriolfarrus.codewarschallenge.core.repository.CodewarsRepository
@@ -19,9 +21,11 @@ class ChallengeDetailPresenterImpl @Inject constructor(private val codewarsRepos
 
     override fun attachView(view: ChallengeDetailContract.ChallengeDetailView) {
         this.view = view
+        view.getViewLifeCycle().addObserver(this)
         loadChallengeDetail(view.getChallengeId())
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun detach() {
         compositeDisposable.dispose()
     }
@@ -30,8 +34,8 @@ class ChallengeDetailPresenterImpl @Inject constructor(private val codewarsRepos
         val disposable = codewarsRepository.getChallenge(challengeId)
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
-            .subscribe({view?.renderChallenge(it)},
-                       {view?.renderError()})
+            .subscribe({ view?.renderChallenge(it) },
+                       { view?.renderError() })
 
         compositeDisposable.add(disposable)
     }

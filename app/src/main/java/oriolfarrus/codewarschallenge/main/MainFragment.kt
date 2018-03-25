@@ -1,6 +1,7 @@
 package oriolfarrus.codewarschallenge.main
 
 import android.app.Activity
+import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -67,14 +68,11 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
         Toast.makeText(context, R.string.user_not_found, Toast.LENGTH_LONG).show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.detach()
-    }
-
     override fun onPlayerClick(player: Player) {
         context?.startActivity(PlayerDetailActivity.getCallingIntent(context as Context, player))
     }
+
+    override fun getViewLifeCycle() = lifecycle
 
     private fun resetSearchState() {
         nameField.text.clear()

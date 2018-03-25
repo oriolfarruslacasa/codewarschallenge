@@ -59,11 +59,6 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
         initRecyclerView()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.detach()
-    }
-
     override fun renderChallenges(dataWrapper: ChallengeCompletedWrapper) {
         val totalItems = adapter.addData(dataWrapper.data)
         endlessRecyclerview?.finishedLoading()
@@ -100,6 +95,8 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
             show()
         }
     }
+
+    override fun getViewLifeCycle() = lifecycle
 
     private fun retryAction(view: View) {
         challengesError.gone()
