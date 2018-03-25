@@ -9,6 +9,8 @@
     <string name="menu_authored_challenges">Authored challenges</string>
     <string name="error_no_challenges_found">NO CHALLENGES FOUND</string>
     <string name="all_challenges_loaded">All challenges loaded</string>
+    <string name="server_timeout">There has been a server timeout</string>
+    <string name="retry">Retry</string>
 
     <string-array name="sorting_array">
         <item>Date</item>

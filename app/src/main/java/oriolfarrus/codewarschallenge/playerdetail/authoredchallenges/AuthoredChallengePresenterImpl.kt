@@ -1,19 +1,57 @@
 package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 
+import android.util.Log
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import oriolfarrus.codewarschallenge.core.repository.CodewarsRepository
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class AuthoredChallengePresenterImpl @Inject constructor(private val compositeDisposable: CompositeDisposable)
+class AuthoredChallengePresenterImpl @Inject constructor(private val codewarsRepository: CodewarsRepository,
+                                                         private val compositeDisposable: CompositeDisposable,
+                                                         @Named("io") private val ioScheduler: Scheduler,
+                                                         @Named("mainThread") private val mainThreadScheduler: Scheduler)
     : AuthoredChallengeContract.AuthoredChallengePresenter {
 
-    override fun attachView(view: AuthoredChallengeContract.AuthoredChallengeView) {
+    companion object {
+        const val TIMEOUT_ERROR = "timeout"
+    }
 
+    var view: AuthoredChallengeContract.AuthoredChallengeView? = null
+
+    override fun attachView(view: AuthoredChallengeContract.AuthoredChallengeView) {
+        this.view = view
+        loadAuthoredChallenges(view.getPlayerName())
     }
 
     override fun detach() {
         compositeDisposable.dispose()
+    }
+
+    override fun retry() {
+        view?.let {
+            loadAuthoredChallenges(it.getPlayerName())
+        }
+    }
+
+    private fun loadAuthoredChallenges(playerName: String) {
+        val disposable = codewarsRepository.getUserAuthoredChallenge(playerName)
+            .subscribeOn(ioScheduler)
+            .observeOn(mainThreadScheduler)
+            .subscribe(
+                { view?.renderChallenges(it) },
+                {
+                    if (it.localizedMessage == TIMEOUT_ERROR) {
+                        view?.renderTimeout()
+                    } else {
+                        Log.e("AuthoredChallenge", it.localizedMessage)
+                        view?.renderError()
+                    }
+                })
+
+        compositeDisposable.add(disposable)
     }
 }

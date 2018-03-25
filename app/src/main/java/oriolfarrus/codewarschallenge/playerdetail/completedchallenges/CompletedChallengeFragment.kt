@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_completed_challenge.*
+import kotlinx.android.synthetic.main.fragment_challenge.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.core.gone
@@ -47,7 +47,7 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val inflate = inflater.inflate(R.layout.fragment_completed_challenge, container, false)
+        val inflate = inflater.inflate(R.layout.fragment_challenge, container, false)
         presenter.attachView(this)
         return inflate
     }
@@ -59,10 +59,10 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
 
     override fun renderChallenges(dataWrapper: ChallengeCompletedWrapper) {
         val totalItems = adapter.addData(dataWrapper.data)
-        endlessRecyclerview.finishedLoading()
+        endlessRecyclerview?.finishedLoading()
 
         if (totalItems == dataWrapper.totalItems) {
-            endlessRecyclerview.endlessRecyclerViewListener = null
+            endlessRecyclerview?.endlessRecyclerViewListener = null
             Snackbar.make(endlessRecyclerview,
                           R.string.all_challenges_loaded, Snackbar.LENGTH_SHORT).show()
         }

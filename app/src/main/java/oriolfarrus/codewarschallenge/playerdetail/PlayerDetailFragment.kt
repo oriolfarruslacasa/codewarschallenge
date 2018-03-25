@@ -83,11 +83,11 @@ class PlayerDetailFragment : Fragment(), PlayerDetailContract.PlayerDetailView {
 
     private fun setupToolbar() {
         activity?.let {
-            it.title = getPlayerName()
+            it.title = if (getPlayerName().isNotEmpty()) getPlayerName() else getPlayerUserName()
         }
     }
 
-    private fun getPlayerName() = arguments?.getString(KEY_NAME)
+    private fun getPlayerName() = arguments?.getString(KEY_NAME) ?: ""
 
     private fun getPlayerUserName() = arguments?.getString(KEY_USERNAME) ?: ""
 }

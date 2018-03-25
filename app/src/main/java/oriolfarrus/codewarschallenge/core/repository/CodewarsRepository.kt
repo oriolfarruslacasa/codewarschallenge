@@ -1,6 +1,7 @@
 package oriolfarrus.codewarschallenge.core.repository
 
 import io.reactivex.Single
+import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
 import oriolfarrus.codewarschallenge.core.model.ChallengeCompletedWrapper
 import oriolfarrus.codewarschallenge.core.model.Player
 import oriolfarrus.codewarschallenge.core.network.CodewarsService
@@ -17,5 +18,9 @@ class CodewarsRepository @Inject constructor(val codewarsService: CodewarsServic
 
     fun getUserCompletedChallenge(name: String, page: Int): Single<ChallengeCompletedWrapper> {
         return codewarsService.getUserCompletedChallenge(name, page)
+    }
+
+    fun getUserAuthoredChallenge(name: String): Single<ChallengeAuthoredWrapper> {
+        return codewarsService.getUserAuthoredChallenge(name)
     }
 }

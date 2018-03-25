@@ -1,5 +1,6 @@
 package oriolfarrus.codewarschallenge.playerdetail
 
+import oriolfarrus.codewarschallenge.core.model.ChallengeAuthored
 import oriolfarrus.codewarschallenge.core.model.ChallengeCompleted
 
 /**
@@ -7,4 +8,5 @@ import oriolfarrus.codewarschallenge.core.model.ChallengeCompleted
  */
 interface ChallengeClickListener {
     fun onChallengeClicked(challengeCompleted: ChallengeCompleted){}
+    fun onChallengeClicked(challengeAuthored: ChallengeAuthored){}
 }

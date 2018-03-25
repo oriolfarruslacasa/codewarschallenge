@@ -1,6 +1,7 @@
 package oriolfarrus.codewarschallenge.core.network
 
 import io.reactivex.Single
+import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
 import oriolfarrus.codewarschallenge.core.model.ChallengeCompletedWrapper
 import oriolfarrus.codewarschallenge.core.model.Player
 import retrofit2.http.GET
@@ -18,4 +19,7 @@ interface CodewarsService {
     @GET("users/{name}/code-challenges/completed")
     fun getUserCompletedChallenge(@Path("name") name: String,
                                   @Query("page") page: Int): Single<ChallengeCompletedWrapper>
+
+    @GET("users/{name}/code-challenges/authored")
+    fun getUserAuthoredChallenge(@Path("name") name: String): Single<ChallengeAuthoredWrapper>
 }

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_player.view.*
 import oriolfarrus.codewarschallenge.R
+import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.Player
+import oriolfarrus.codewarschallenge.core.visible
 import javax.inject.Inject
 
 /**
@@ -55,7 +57,12 @@ class MainFragmentAdapter @Inject constructor() : RecyclerView.Adapter<MainFragm
         val playerToShow = list.getOrNull(position)
 
         playerToShow?.let { player ->
-            holder.itemView.playerName.text = player.name
+            if (player.name.isNotEmpty()) {
+                holder.itemView.playerName.visible()
+                holder.itemView.playerName.text = player.name
+            } else {
+                holder.itemView.playerName.gone()
+            }
             holder.itemView.playerUserName.text = player.username
             holder.itemView.playerRank.text = holder.itemView.context.getString(R.string.main_fragment_rank_text, player.leaderboardPosition)
 
