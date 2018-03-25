@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_challenge.view.*
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
-import oriolfarrus.codewarschallenge.playerdetail.ChallengeClickListener
+import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeClickListener
 import javax.inject.Inject
 
 /**

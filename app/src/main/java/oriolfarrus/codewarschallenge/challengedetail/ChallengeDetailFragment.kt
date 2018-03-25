@@ -5,9 +5,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_challenge_detail.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
+import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
+import oriolfarrus.codewarschallenge.core.model.ChallengeDetail
+import oriolfarrus.codewarschallenge.core.visible
 import javax.inject.Inject
 
 /**
@@ -18,7 +22,7 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
     companion object {
 
         private const val KEY_NAME = "KEY_NAME"
-        private const val KEY_USERNAME = "KEY_USERNAME"
+        private const val KEY_ID = "KEY_ID"
 
         fun newInstance(bundle: Bundle): ChallengeDetailFragment {
             return ChallengeDetailFragment().apply {
@@ -28,7 +32,8 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
 
         fun getBundle(challenge: ChallengeBase): Bundle {
             return Bundle().apply {
-
+                putString(KEY_NAME, challenge.name)
+                putString(KEY_ID, challenge.id)
             }
         }
     }
@@ -48,7 +53,7 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        renderChallenge()
+        setupToolbar()
     }
 
     override fun onDestroyView() {
@@ -56,6 +61,37 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
         presenter.detach()
     }
 
-    override fun renderChallenge() {
+    override fun renderChallenge(challengeDetail: ChallengeDetail) {
+        context?.let {
+            showContent()
+            challengeDetailDescription.text = challengeDetail.description
+            challengeDetailCategory.text = it.getString(R.string.challenge_detail_category, challengeDetail.category)
+        }
+    }
+
+    override fun renderError() {
+        showError()
+    }
+
+    override fun getChallengeId() = arguments?.getString(KEY_ID) ?: ""
+
+    private fun showError() {
+        progressBar.gone()
+        challengeError.visible()
+        challengeDetailContent.gone()
+    }
+
+    private fun showContent() {
+        progressBar.gone()
+        challengeDetailContent.visible()
+        challengeError.gone()
+    }
+
+    private fun getChallengeName() = arguments?.getString(KEY_NAME) ?: ""
+
+    private fun setupToolbar() {
+        activity?.let {
+            it.title = getChallengeName()
+        }
     }
 }

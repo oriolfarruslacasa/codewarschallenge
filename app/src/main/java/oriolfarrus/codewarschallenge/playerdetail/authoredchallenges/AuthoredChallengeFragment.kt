@@ -15,14 +15,15 @@ import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.core.visible
-import oriolfarrus.codewarschallenge.playerdetail.ChallengeClickListener
-import oriolfarrus.codewarschallenge.playerdetail.ChallengeAdapter
+import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeClickListener
+import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeAdapter
 import javax.inject.Inject
 
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.AuthoredChallengeView, ChallengeClickListener {
+class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.AuthoredChallengeView,
+                                  ChallengeClickListener {
 
 
     companion object {

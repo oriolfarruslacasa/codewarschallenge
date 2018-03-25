@@ -11,11 +11,13 @@ interface CompletedChallengeContract {
         fun getPlayerName() : String
         fun renderChallenges(dataWrapper: ChallengeCompletedWrapper)
         fun renderError()
+        fun renderTimeout()
     }
 
     interface CompletedChallengePresenter{
         fun attachView(view: CompletedChallengeView)
         fun detach()
         fun loadNextPage()
+        fun retry()
     }
 }

@@ -1,4 +1,4 @@
-package oriolfarrus.codewarschallenge.playerdetail
+package oriolfarrus.codewarschallenge.playerdetail.common
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

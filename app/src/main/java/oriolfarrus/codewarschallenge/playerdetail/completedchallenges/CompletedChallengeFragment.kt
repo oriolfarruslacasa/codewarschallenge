@@ -15,9 +15,9 @@ import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.core.model.ChallengeCompletedWrapper
 import oriolfarrus.codewarschallenge.core.visible
-import oriolfarrus.codewarschallenge.playerdetail.ChallengeAdapter
-import oriolfarrus.codewarschallenge.playerdetail.ChallengeClickListener
 import oriolfarrus.codewarschallenge.playerdetail.authoredchallenges.CompletedChallengePresenterImpl
+import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeAdapter
+import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeClickListener
 import javax.inject.Inject
 
 /**
@@ -89,6 +89,22 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
 
     override fun onChallengeClicked(challenge: ChallengeBase) {
         context?.startActivity(ChallengeDetailActivity.getCallingIntent(context as Context, challenge))
+    }
+
+    override fun renderTimeout() {
+        renderError()
+
+        Snackbar.make(endlessRecyclerview,
+                      R.string.server_timeout, Snackbar.LENGTH_SHORT).apply {
+            setAction(R.string.retry, ::retryAction)
+            show()
+        }
+    }
+
+    private fun retryAction(view: View) {
+        challengesError.gone()
+        endlessRecyclerview.visible()
+        presenter.retry()
     }
 
     private fun initRecyclerView() {

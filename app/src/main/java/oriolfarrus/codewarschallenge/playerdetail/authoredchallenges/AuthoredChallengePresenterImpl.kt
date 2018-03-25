@@ -3,6 +3,7 @@ package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 import android.util.Log
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
 import oriolfarrus.codewarschallenge.core.repository.CodewarsRepository
 import javax.inject.Inject
 import javax.inject.Named
@@ -42,7 +43,7 @@ class AuthoredChallengePresenterImpl @Inject constructor(private val codewarsRep
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
             .subscribe(
-                { view?.renderChallenges(it) },
+                ::loadCompletedChallengesSuccess,
                 {
                     if (it.localizedMessage == TIMEOUT_ERROR) {
                         view?.renderTimeout()
@@ -53,5 +54,13 @@ class AuthoredChallengePresenterImpl @Inject constructor(private val codewarsRep
                 })
 
         compositeDisposable.add(disposable)
+    }
+
+    private fun loadCompletedChallengesSuccess(data: ChallengeAuthoredWrapper) {
+        if (data.data.isNotEmpty()) {
+            view?.renderChallenges(data)
+        } else {
+            view?.renderError()
+        }
     }
 }

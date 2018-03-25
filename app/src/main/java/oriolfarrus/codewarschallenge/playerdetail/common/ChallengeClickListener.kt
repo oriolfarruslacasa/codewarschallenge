@@ -1,4 +1,4 @@
-package oriolfarrus.codewarschallenge.playerdetail
+package oriolfarrus.codewarschallenge.playerdetail.common
 
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 

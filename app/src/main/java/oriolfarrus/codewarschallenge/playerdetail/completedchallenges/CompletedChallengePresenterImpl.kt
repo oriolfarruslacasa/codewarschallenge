@@ -18,6 +18,10 @@ class CompletedChallengePresenterImpl @Inject constructor(private val codewarsRe
                                                           @Named("mainThread") private val mainThreadScheduler: Scheduler)
     : CompletedChallengeContract.CompletedChallengePresenter {
 
+    companion object {
+        const val TIMEOUT_ERROR = "timeout"
+    }
+
     private var view: CompletedChallengeContract.CompletedChallengeView? = null
     private var page = 0
 
@@ -36,6 +40,12 @@ class CompletedChallengePresenterImpl @Inject constructor(private val codewarsRe
         }
     }
 
+    override fun retry() {
+        view?.let {
+            loadCompletedChallenges(it.getPlayerName())
+        }
+    }
+
     private fun loadCompletedChallenges(playerName: String) {
         val disposable = codewarsRepository.getUserCompletedChallenge(playerName, page)
             .subscribeOn(ioScheduler)
@@ -46,15 +56,23 @@ class CompletedChallengePresenterImpl @Inject constructor(private val codewarsRe
     }
 
     private fun loadCompletedChallengesSuccess(data: ChallengeCompletedWrapper) {
-        page++
-        view?.renderChallenges(data)
+        if (data.data.isNotEmpty()) {
+            page++
+            view?.renderChallenges(data)
+        } else if (page == 0) {
+            view?.renderError()
+        }
     }
 
     //I assume that if there's an error no more pages can be loaded, no loadFinished() is going to be called in the Fragment
     private fun loadCompletedChallengesError(throwable: Throwable) {
-        Log.e("completedChallenge", throwable.localizedMessage + " " + throwable.message)
-        if (page == 0) {
-            view?.renderError()
+        if (throwable.localizedMessage == TIMEOUT_ERROR) {
+            view?.renderTimeout()
+        } else {
+            Log.e("completedChallenge", throwable.localizedMessage + " " + throwable.message)
+            if (page == 0) {
+                view?.renderError()
+            }
         }
     }
 }
