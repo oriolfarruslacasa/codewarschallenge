@@ -95,7 +95,7 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
         renderError()
 
         Snackbar.make(endlessRecyclerview,
-                      R.string.server_timeout, Snackbar.LENGTH_SHORT).apply {
+                      R.string.server_timeout, Snackbar.LENGTH_INDEFINITE).apply {
             setAction(R.string.retry, ::retryAction)
             show()
         }

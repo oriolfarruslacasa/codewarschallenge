@@ -15,8 +15,8 @@ import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.core.visible
-import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeClickListener
 import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeAdapter
+import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeClickListener
 import javax.inject.Inject
 
 /**
@@ -76,7 +76,7 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
         renderError()
 
         Snackbar.make(endlessRecyclerview,
-                      R.string.server_timeout, Snackbar.LENGTH_SHORT).apply {
+                      R.string.server_timeout, Snackbar.LENGTH_INDEFINITE).apply {
             setAction(R.string.retry, ::retryAction)
             show()
         }
