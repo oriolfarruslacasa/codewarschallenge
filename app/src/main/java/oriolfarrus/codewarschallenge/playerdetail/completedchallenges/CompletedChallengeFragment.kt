@@ -3,6 +3,7 @@ package oriolfarrus.codewarschallenge.playerdetail.completedchallenges
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,11 @@ import kotlinx.android.synthetic.main.fragment_challenges_list.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.challengedetail.ChallengeDetailActivity
+import oriolfarrus.codewarschallenge.core.BaseFragment
 import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.core.model.ChallengeCompletedWrapper
+import oriolfarrus.codewarschallenge.core.testing.IdlingResourceProvider
 import oriolfarrus.codewarschallenge.core.visible
 import oriolfarrus.codewarschallenge.playerdetail.authoredchallenges.CompletedChallengePresenterImpl
 import oriolfarrus.codewarschallenge.playerdetail.common.ChallengeAdapter
@@ -23,7 +26,7 @@ import javax.inject.Inject
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.CompletedChallengeView, EndlessRecyclerView.EndlessRecyclerViewListener,
+class CompletedChallengeFragment : BaseFragment(), CompletedChallengeContract.CompletedChallengeView, EndlessRecyclerView.EndlessRecyclerViewListener,
                                    ChallengeClickListener {
 
     companion object {
@@ -51,6 +54,7 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.fragment_challenges_list, container, false)
         presenter.attachView(this)
+        getIdlingResource()?.increment()
         return inflate
     }
 
@@ -70,11 +74,13 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
                               R.string.all_challenges_loaded, Snackbar.LENGTH_SHORT).show()
             }
         }
+        getIdlingResource()?.decrement()
     }
 
     override fun renderError() {
         challengesError.visible()
         endlessRecyclerview.gone()
+        getIdlingResource()?.decrement()
     }
 
     override fun getPlayerName() = arguments?.getString(KEY_USERNAME) ?: ""
@@ -82,6 +88,7 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
     override fun onEndReached() {
         presenter.loadNextPage()
         adapter.isLoading = true
+        getIdlingResource()?.increment()
     }
 
     override fun onChallengeClicked(challenge: ChallengeBase) {
@@ -106,6 +113,7 @@ class CompletedChallengeFragment : Fragment(), CompletedChallengeContract.Comple
         challengesError.gone()
         endlessRecyclerview.visible()
         presenter.retry()
+        getIdlingResource()?.increment()
     }
 
     private fun initRecyclerView() {

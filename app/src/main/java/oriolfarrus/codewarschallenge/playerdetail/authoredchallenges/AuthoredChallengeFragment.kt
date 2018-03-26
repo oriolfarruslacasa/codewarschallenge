@@ -3,7 +3,6 @@ package oriolfarrus.codewarschallenge.playerdetail.authoredchallenges
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import kotlinx.android.synthetic.main.fragment_challenges_list.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.challengedetail.ChallengeDetailActivity
+import oriolfarrus.codewarschallenge.core.BaseFragment
 import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.ChallengeAuthoredWrapper
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
@@ -22,7 +22,7 @@ import javax.inject.Inject
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.AuthoredChallengeView,
+class AuthoredChallengeFragment : BaseFragment(), AuthoredChallengeContract.AuthoredChallengeView,
                                   ChallengeClickListener {
 
 
@@ -50,6 +50,7 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.fragment_challenges_list, container, false)
         presenter.attachView(this)
+        getIdlingResource()?.increment()
         return inflate
     }
 
@@ -62,11 +63,13 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
         dataWrapper.data?.let {
             adapter.addData(it)
         }
+        getIdlingResource()?.decrement()
     }
 
     override fun renderError() {
         challengesError.visible()
         endlessRecyclerview.gone()
+        getIdlingResource()?.decrement()
     }
 
     override fun renderTimeout() {
@@ -90,6 +93,7 @@ class AuthoredChallengeFragment : Fragment(), AuthoredChallengeContract.Authored
     private fun retryAction(view: View) {
         showRecyclerView()
         presenter.retry()
+        getIdlingResource()?.increment()
     }
 
     private fun showRecyclerView() {

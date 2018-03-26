@@ -3,13 +3,13 @@ package oriolfarrus.codewarschallenge.playerdetail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import oriolfarrus.codewarschallenge.core.BaseActivity
 import oriolfarrus.codewarschallenge.core.model.Player
 
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class PlayerDetailActivity : AppCompatActivity() {
+class PlayerDetailActivity : BaseActivity() {
 
     companion object {
         fun getCallingIntent(context: Context, player: Player): Intent {

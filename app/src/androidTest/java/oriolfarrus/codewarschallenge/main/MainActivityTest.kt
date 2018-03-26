@@ -1,6 +1,5 @@
 package oriolfarrus.codewarschallenge.main
 
-import android.content.Intent
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.IdlingRegistry
@@ -13,16 +12,13 @@ import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.test.espresso.intent.Intents.intended
 import android.support.test.espresso.intent.matcher.BundleMatchers.hasEntry
-import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import android.support.test.espresso.intent.matcher.IntentMatchers.hasExtras
-import android.support.test.espresso.intent.matcher.IntentMatchers.toPackage
 import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.filters.LargeTest
-import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
@@ -32,7 +28,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import oriolfarrus.codewarschallenge.R
-import oriolfarrus.codewarschallenge.playerdetail.PlayerDetailActivity
 import oriolfarrus.codewarschallenge.playerdetail.PlayerDetailFragment.Companion.KEY_USERNAME
 import java.lang.Thread.sleep
 
@@ -53,12 +48,6 @@ class MainActivityTest {
     @Rule
     @JvmField
     var mActivityRule: IntentsTestRule<MainActivity> = IntentsTestRule(MainActivity::class.java)
-
-/*
-    @Rule
-    @JvmField
-    var intentsTestRule = IntentsTestRule<MainActivity>(MainActivity::class.java, true, false)
-*/
 
     @Before
     fun setup() {
