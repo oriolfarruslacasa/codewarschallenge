@@ -1,4 +1,4 @@
-package oriolfarrus.codewarschallenge.main
+package oriolfarrus.codewarschallenge
 
 import android.content.res.Resources
 import android.support.v7.widget.RecyclerView
@@ -10,7 +10,7 @@ import org.hamcrest.TypeSafeMatcher
 /**
  * Created by dannyroa on 5/10/15.
  */
-class RecyclerViewMatcher(private val recyclerViewId: Int) {
+public class RecyclerViewMatcher(private val recyclerViewId: Int) {
 
     fun atPosition(position: Int): Matcher<View> {
         return atPositionOnView(position, -1)

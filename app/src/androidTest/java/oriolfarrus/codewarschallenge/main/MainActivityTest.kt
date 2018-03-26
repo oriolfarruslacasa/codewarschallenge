@@ -28,6 +28,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import oriolfarrus.codewarschallenge.R
+import oriolfarrus.codewarschallenge.RecyclerViewMatcher
 import oriolfarrus.codewarschallenge.playerdetail.PlayerDetailFragment.Companion.KEY_USERNAME
 import java.lang.Thread.sleep
 
