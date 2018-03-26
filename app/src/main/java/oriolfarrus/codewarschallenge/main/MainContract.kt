@@ -13,6 +13,7 @@ interface MainContract {
         fun renderPlayer(player: Player)
         fun renderPlayerList(list: List<Player>)
         fun renderPlayerError()
+        fun renderPlayerListError()
     }
 
     interface MainPresenter : BasePresenter {

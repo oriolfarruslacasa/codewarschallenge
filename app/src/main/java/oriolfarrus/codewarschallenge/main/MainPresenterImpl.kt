@@ -2,7 +2,6 @@ package oriolfarrus.codewarschallenge.main
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
-import android.util.Log
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import oriolfarrus.codewarschallenge.core.repository.CodewarsRepository
@@ -49,7 +48,6 @@ class MainPresenterImpl @Inject constructor(private val codewarsRepository: Code
                            view?.renderPlayer(player)
                        },
                        { e ->
-                           Log.e("stuff", e.localizedMessage)
                            view?.renderPlayerError()
                        })
 
@@ -63,7 +61,7 @@ class MainPresenterImpl @Inject constructor(private val codewarsRepository: Code
             .subscribe({
                            view?.renderPlayerList(it)
                        }, { e ->
-                           Log.e("stuff", "database" + e.localizedMessage)
+                           view?.renderPlayerListError()
                        })
 
         compositeDisposable.add(disposable)

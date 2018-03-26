@@ -21,7 +21,7 @@ class PlayerDetailFragment : Fragment(), PlayerDetailContract.PlayerDetailView {
     companion object {
 
         private const val KEY_NAME = "KEY_NAME"
-        private const val KEY_USERNAME = "KEY_USERNAME"
+        const val KEY_USERNAME = "KEY_USERNAME"
 
         fun newInstance(bundle: Bundle): PlayerDetailFragment {
             return PlayerDetailFragment().apply {

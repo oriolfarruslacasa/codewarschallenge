@@ -4,6 +4,8 @@ import android.app.Activity
 import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
 import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.Player
+import oriolfarrus.codewarschallenge.core.testing.IdlingResourceProvider
 import oriolfarrus.codewarschallenge.core.visible
 import oriolfarrus.codewarschallenge.playerdetail.PlayerDetailActivity
 import javax.inject.Inject
@@ -43,6 +46,7 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.fragment_main, container, false)
         presenter.attachView(this)
+        getIdlingResource()?.increment()
         return inflate
     }
 
@@ -57,15 +61,22 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
         adapter.addPlayer(player)
         resetSearchState()
         hideProgressBar()
+        getIdlingResource()?.decrement()
     }
 
     override fun renderPlayerList(list: List<Player>) {
         adapter.addList(list)
+        getIdlingResource()?.decrement()
     }
 
     override fun renderPlayerError() {
         hideProgressBar()
-        Toast.makeText(context, R.string.user_not_found, Toast.LENGTH_LONG).show()
+        Snackbar.make(recyclerView, R.string.user_not_found, Snackbar.LENGTH_LONG).show()
+        getIdlingResource()?.decrement()
+    }
+
+    override fun renderPlayerListError() {
+        getIdlingResource()?.decrement()
     }
 
     override fun onPlayerClick(player: Player) {
@@ -125,6 +136,7 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
 
         if (name.isNotEmpty()) {
             presenter.search(name)
+            getIdlingResource()?.increment()
         }
     }
 
@@ -137,5 +149,9 @@ class MainFragment : Fragment(), MainContract.MainView, PlayerClickListener {
 
     private fun hideProgressBar() {
         progressBar.gone()
+    }
+
+    private fun getIdlingResource(): CountingIdlingResource?{
+        return (activity as? IdlingResourceProvider)?.getIdlingResource()
     }
 }

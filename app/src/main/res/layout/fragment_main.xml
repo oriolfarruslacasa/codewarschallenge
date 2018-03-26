@@ -13,7 +13,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/main_fragment_send"
         app:layout_constraintEnd_toStartOf="@+id/sortingSpinner"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp" />
 
     <EditText
         android:id="@+id/nameField"

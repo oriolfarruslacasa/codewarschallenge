@@ -1,10 +1,13 @@
 package oriolfarrus.codewarschallenge.main
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import oriolfarrus.codewarschallenge.R
+import android.support.test.espresso.idling.CountingIdlingResource
+import android.support.v7.app.AppCompatActivity
+import oriolfarrus.codewarschallenge.core.testing.IdlingResourceProvider
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IdlingResourceProvider {
+
+    var idling: CountingIdlingResource? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -12,4 +15,10 @@ class MainActivity : AppCompatActivity() {
             .replace(android.R.id.content, MainFragment.newInstance())
             .commit()
     }
+
+    override fun setIdlingResource(idlingResource: CountingIdlingResource) {
+        this.idling = idlingResource
+    }
+
+    override fun getIdlingResource(): CountingIdlingResource? = idling
 }
