@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_challenge_detail.*
 import oriolfarrus.codewarschallenge.CodewarsApplication
 import oriolfarrus.codewarschallenge.R
+import oriolfarrus.codewarschallenge.core.BaseFragment
 import oriolfarrus.codewarschallenge.core.gone
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 import oriolfarrus.codewarschallenge.core.model.ChallengeDetail
@@ -18,12 +19,12 @@ import javax.inject.Inject
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDetailView {
+class ChallengeDetailFragment : BaseFragment(), ChallengeDetailContract.ChallengeDetailView {
 
     companion object {
 
-        private const val KEY_NAME = "KEY_NAME"
-        private const val KEY_ID = "KEY_ID"
+        const val KEY_NAME = "KEY_NAME"
+        const val KEY_ID = "KEY_ID"
 
         fun newInstance(bundle: Bundle): ChallengeDetailFragment {
             return ChallengeDetailFragment().apply {
@@ -49,6 +50,7 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.fragment_challenge_detail, container, false)
         presenter.attachView(this)
+        getIdlingResource()?.increment()
         return inflate
     }
 
@@ -63,10 +65,12 @@ class ChallengeDetailFragment : Fragment(), ChallengeDetailContract.ChallengeDet
             challengeDetailDescription.text = challengeDetail.description
             challengeDetailCategory.text = it.getString(R.string.challenge_detail_category, challengeDetail.category)
         }
+        getIdlingResource()?.decrement()
     }
 
     override fun renderError() {
         showError()
+        getIdlingResource()?.decrement()
     }
 
     override fun getChallengeId() = arguments?.getString(KEY_ID) ?: ""

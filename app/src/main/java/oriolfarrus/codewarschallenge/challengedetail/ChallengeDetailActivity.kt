@@ -4,12 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import oriolfarrus.codewarschallenge.core.BaseActivity
 import oriolfarrus.codewarschallenge.core.model.ChallengeBase
 
 /**
  * Created by oriolfarrus on 24/03/2018.
  */
-class ChallengeDetailActivity : AppCompatActivity() {
+class ChallengeDetailActivity : BaseActivity() {
 
     companion object {
         fun getCallingIntent(context: Context, challenge: ChallengeBase): Intent {
